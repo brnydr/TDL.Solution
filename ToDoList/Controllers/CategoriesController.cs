@@ -18,12 +18,14 @@ namespace ToDoList.Controllers
 
     public ActionResult Index()
     {
+      ViewBag.PageTitle = "All Categories";
       List<Category> model = _db.Categories.ToList();
       return View(model);
     }
 
     public ActionResult Create()
     {
+      ViewBag.PageTitle = "Create a Category";
       return View();
     }
 
@@ -37,12 +39,43 @@ namespace ToDoList.Controllers
 
     public ActionResult Details(int id)
     {
+      ViewBag.PageTitle = "Category Details";
       Category thisCategory = _db.Categories
                                   .Include(category => category.Items)
                                   .FirstOrDefault(category => category.CategoryId == id);
       return View(thisCategory);
     }
 
+    public ActionResult Edit(int id)
+    {
+      ViewBag.PageTitle = "Edit Category";
+      Category thisCategory = _db.Categories.FirstOrDefault(category => category.CategoryId == id);
+      return View(thisCategory);
+    }
 
+    [HttpPost]
+    public ActionResult Edit(Category category)
+    {
+      _db.Update(category);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult Delete(int id)
+    {
+    
+      Category thisCategory = _db.Categories.FirstOrDefault(category => category.CategoryId == id);
+      ViewBag.PageTitle = "Delete Category";
+      return View(thisCategory);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      Category thisCategory = _db.Categories.FirstOrDefault(category => category.CategoryId == id);
+      _db.Categories.Remove(thisCategory);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }

@@ -1,0 +1,19 @@
+@{
+  Layout = "_Layout";
+}
+
+@model ToDoList.Models.Category
+
+<h4>@ViewBag.PageTitle</h4>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.CategoryId)
+
+  @Html.LabelFor(model => model.Name, "Category name: ")
+  @Html.EditorFor(model => model.Name)
+  <input type="submit" value="Save" />
+
+}
+
+<p>@Html.ActionLink("Back to Home", "Index", "Home")</p>

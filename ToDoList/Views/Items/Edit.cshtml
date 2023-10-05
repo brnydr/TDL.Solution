@@ -13,7 +13,12 @@
   @Html.HiddenFor(model => model.ItemId)
   @Html.LabelFor(model => model.Description)
   @Html.EditorFor(model => model.Description)
+  <br>
+  @Html.LabelFor(model => model.Category)
+  @Html.DropDownList("CategoryId") 
+  <!-- viewbag CategoryId property implicitly passed in above -->
   <input type="submit" value="Save" />
 }
 
 <p>@Html.ActionLink("Back to list", "Index")</p>
+<p>@Html.ActionLink("Back to Home", "Index", "Home")</p>

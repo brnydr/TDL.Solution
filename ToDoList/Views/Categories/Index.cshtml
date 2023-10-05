@@ -1,5 +1,24 @@
-@{
-  Layout = "_Layout";
-  }
 
-  
+
+  @{
+  Layout = "_Layout";
+}
+
+@using ToDoList.Models;
+
+<h1>@ViewBag.PageTitle</h1>
+
+@if (@Model.Count == 0)
+{
+  <h3>No Categories have been added yet!</h3>
+} 
+
+<ul>
+  @foreach(Category category in Model)
+  {
+      <li>@Html.ActionLink($"{category.Name}", "Details", new { id = category.CategoryId })</li>
+  }
+</ul>
+
+<p>@Html.ActionLink("Back to Home", "Index", "Home")</p>
+<p>@Html.ActionLink("Add new category", "Create")</p>

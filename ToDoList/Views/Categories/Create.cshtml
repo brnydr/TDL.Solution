@@ -1,0 +1,16 @@
+@{
+  Layout = "_Layout";
+}
+<h4>@ViewBag.PageTitle</h4>
+
+@model ToDoList.Models.Category
+
+@using (Html.BeginForm())
+{
+  @Html.LabelFor(model => model.Name)
+  @Html.TextBoxFor(model => model.Name)
+  <input type="submit" value="Add" />
+}
+<br>
+@Html.ActionLink("Back to List", "Index")
+<p>@Html.ActionLink("Back to Home", "Index", "Home")</p>
