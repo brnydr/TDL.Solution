@@ -29,7 +29,7 @@ namespace ToDoList.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("ToDoList.Models.Item", b =>
@@ -48,7 +48,7 @@ namespace ToDoList.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
                 });
 
             modelBuilder.Entity("ToDoList.Models.ItemTag", b =>
@@ -69,7 +69,7 @@ namespace ToDoList.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("ItemTags");
+                    b.ToTable("ItemTags", (string)null);
                 });
 
             modelBuilder.Entity("ToDoList.Models.Tag", b =>
@@ -83,7 +83,7 @@ namespace ToDoList.Migrations
 
                     b.HasKey("TagId");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("ToDoList.Models.Item", b =>
