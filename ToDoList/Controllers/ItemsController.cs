@@ -21,7 +21,7 @@ namespace ToDoList.Controllers
       List<Item> model = _db.Items
                             .Include(item => item.Category)
                             .ToList();
-      ViewBag.PageTitle = "View All Items";
+      
       return View(model);
     }
 
@@ -45,10 +45,11 @@ namespace ToDoList.Controllers
 
     public ActionResult Details(int id)
     {
-      ViewBag.PageTitle = "Item Details";
       Item thisItem = _db.Items
-                            .Include(item => item.Category)
-                            .FirstOrDefault(item => item.ItemId == id);
+          .Include(item => item.Category)
+          .Include(item => item.JoinEntities)
+          .ThenInclude(join => join.Tag)
+          .FirstOrDefault(item => item.ItemId == id);
       return View(thisItem);
     }
 
@@ -69,7 +70,6 @@ namespace ToDoList.Controllers
 
     public ActionResult Delete(int id)
     {
-      ViewBag.PageTitle = "Delete Item";
       Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
       return View(thisItem);
     }
@@ -79,6 +79,28 @@ namespace ToDoList.Controllers
     {
       Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
       _db.Items.Remove(thisItem);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult AddTag(Item item, int tagId)
+    {
+      #nullable enable
+      ItemTag? joinEntity = _db.ItemTags.FirstOrDefault(join => (join.ItemId == item.ItemId && join.TagId == tagId));
+      #nullable disable
+      if (joinEntity == null && tagId != 0)
+      {
+        _db.ItemTags.Add(new ItemTag() { ItemId = item.ItemId, TagId = tagId });
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = item.ItemId });
+    }
+
+    [HttpPost]
+    public ActionResult DeleteJoin(int joinId)
+    {
+      ItemTag joinEntry = _db.ItemTags.FirstOrDefault(entry => entry.ItemTagId == joinId);
+      _db.ItemTags.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
