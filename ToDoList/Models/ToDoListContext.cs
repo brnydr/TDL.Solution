@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ToDoList.Models
 {
-  public class ToDoListContext : DbContext
+  public class ToDoListContext : IdentityDbContext
   {
     public DbSet<Item> Items { get; set; }
 
