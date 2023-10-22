@@ -3,6 +3,8 @@ using ToDoList.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ToDoList.Controllers
 {
@@ -31,6 +33,11 @@ namespace ToDoList.Controllers
     [HttpPost]
     public ActionResult Create(Category category)
     {
+      if (!ModelState.IsValid)
+      {
+        // ModelState.AddModelError("","Please enter a category name.");
+        return View(category);
+      }
       _db.Categories.Add(category);
       _db.SaveChanges();
       return RedirectToAction("Index");
